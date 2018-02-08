@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="about me">
+<meta name="author" content="user31">
+<title>關於我</title>
+
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!--icon-->
+<link rel="shortcut icon" href="about:blank"> <!--not show favicon-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+
+<!-- Custom CSS-->
+<style>
+@media (min-width: 1200px){
+	.container {
+    	max-width: 960px;
+	}
+}
+
+.index-title{
+	font-family: DroidSansBold;
+    font-weight: bold;
+}
+
+.banner-underline {
+    border-bottom: 4px solid #33a4c9;
+    overflow: hidden;
+    background : #f5f5f5;
+}
+
+.material-icons {vertical-align:-14%}
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-26 { font-size: 26px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.content-line{
+    padding-bottom : 10px;
+    margin-bottom: 10px;
+}
+.content-title{
+	margin-top: 10px;
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: normal;
+}
+i.fa {
+    display: inline-block;
+    border-radius: 25px;
+    box-shadow: 0px 0px 2px #888;
+    padding: 12.5px 12.5px;
+    background: rgb(51, 164, 201);
+    display: block;
+    height: 50px;
+    left: 0;
+    top: -15px;
+    width: 50px;
+    margin-left:15px;
+}
+
+.custom-badge{
+	line-height:30px;
+}
+
+.footer {	
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+    margin-top : 60px;
+    border-top: 4px solid #33a4c9;
+}
+
+.bg-green{
+	background : #6C3;
+}
+
+.bg-orange{
+	background : #F60;
+}
+
+.bg-red{
+	background: red;
+}
+
+.progress-bar-font{
+	text-align:left;
+	font-size: 16px;
+	padding-left:10px;
+}
+
+</style>
+
+<!--Bootstrap core js-->
+<script src="js/jquery-3.2.1.slim.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<!--MyJavascript-->
+<script type="text/Javascript">
+
+function clickUrl(_url){
+	window.open(
+  	_url,
+  	'_blank' 
+	);
+}
+
+var CLIENT_ID = '691492970641-les0sjd1q2tomra4afv1friqjk7l6esm.apps.googleusercontent.com';
+var apiKey = 'AIzaSyBkR7uFK0CWUQF99SFr2OCoemVyBrQwUns';
+var SCOPES = 'https://mail.google.com/'
+            +'https://www.googleapis.com/auth/gmail.modify'                 
+            +'https://www.googleapis.com/auth/gmail.compose'
+            +'https://www.googleapis.com/auth/gmail.send';
+var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"];
+var sendTo = 'pan.user31@gmail.com';
+
+function handleClientLoad() {
+  	gapi.client.setApiKey(apiKey);
+  	window.setTimeout(checkAuth, 1);
+ }
+
+ function checkAuth() {
+   gapi.auth.authorize({
+     client_id: CLIENT_ID,
+     scope: SCOPES,
+     immediate: true
+   }, handleAuthResult);
+ }
+
+function handleAuthResult(authResult) {	
+	if(authResult && !authResult.error) {
+	  loadGmailApi();
+	  $('#btnSend').prop('disabled', false);
+	}
+	else{
+	  $('#btnSend').prop('disabled', true);
+	}	
+}
+
+ function loadGmailApi() {
+    gapi.client.load('gmail', 'v1');
+}
+
+function sendEmail(){  
+  $('#btnSend').prop('disabled', true); //disable button
+  
+  var content = "Name:"+"\r\n"+$('#inputName').val() + "\r\n"+
+  				"From:"+"\r\n" + $('#exampleInputEmail1').val() + "\r\n"+
+  				"Message:"+"\r\n" + $('#exampleFormControlTextarea1').val();
+
+  sendMessage(
+	  {
+	    'To': sendTo,
+	    'From': $('#inputName').val(),
+	    'Subject': 'From : ' + $('#exampleInputEmail1').val()
+	  },
+	  content,
+	  reloadpage
+	);
+
+	return false;
+}
+
+function reloadpage(){
+	alert('謝謝您的來信，我會盡快回覆');
+	location.reload();
+}
+
+function sendMessage(headers_obj, message, callback)
+{
+  //內容
+  var email = '';
+  for(var header in headers_obj)
+    email += header += ": "+headers_obj[header]+"\r\n";
+  email += "\r\n" + message;
+
+  //轉 base64
+  var base64EncodedEmail = btoa(unescape(encodeURIComponent(email)));
+           
+  var request = gapi.client.gmail.users.messages.send({
+	'userId': 'me',
+	'resource': {
+ 	'raw': base64EncodedEmail
+	}
+   });
+	
+   return request.execute(callback);
+}
+
+</script>
+
+<!--啟動 api-->
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+</head>
+
+<body>
+	<main role="main">		
+		<section class="jumbotron banner-underline">
+        	<div class="container">
+        	<div class="row">
+        	<div class="col-md-9">
+        	  <h1 class="display-4 index-title">User31</h1>
+        	  <h2 class="text-secondary font-weight-light">說是開發更像是應用的工程師<br/>
+				 期許自己能寫出什麼程式，方便人們的生活</h2>
+			</div>
+			<div class="col-md-3 text-center">
+				<img class="rounded-circle" src="img/IMG_5776.jpg" alt="Generic placeholder image" width="170" height="170">
+        	</div>
+        	</div>
+      	</section>
+
+      	<!--有關我的事-->
+      	<div class="container">
+      		<div class="row border-bottom content-line">
+      			<i class="material-icons md-light md-26 fa">person</i>
+      			<h3 class="content-title">有關我的事</h3>
+      		</div>
+      		<div class="row mt-3">
+      			<div class="col-md-12">
+      				<p>
+					我，是一個工程師，寫程式的那種。<br/>
+					工作至今也快四年了，年齡雖三十未滿，但也沒剩幾年可揮霍了。
+					<br/><br/>
+					回頭檢視這些年，在公司開發了不少程式，卻沒整理過有關自己的一切，閒暇之餘突然有了這個念頭，這也是網誌誕生的緣由，我想留下些什麼，放一些作品，放一些心得，放一些瑣事，在這世界留下一點點足	跡，如果這些文章能幫到其他人，我想我一定會很開心的。
+					<br/><br/>
+					程式，是為了解決問題，是為了讓人類的生活更便利，這也是我寫程式的初衷，每次開發總是抱持著這個想法，期許自己能寫出既簡單又方便的應用。<br/>
+					我擅長運用 API，網路上已經有太多開放原碼的程式與工具 , 我們碰到的問題，或許早就有了答案，只差在我們是否知道怎麼運用、活用甚至去修改它來解決我們的問題而已。
+					<br/><br/>
+					除了程式，我熱愛健身、爬山、旅行，偶而做些木作，拉個大提琴，雖然就像個一般人，有個普通的工作，普通的生活、普通的人生，但在這穩定生活的外表下，我有著一顆不甘平凡的心，總是鼓勵我、驅使我	，去嘗試與探索這未知的世界，我很享受這種不確定的恐懼。
+					<br/><br/>
+					<strong>Life isn't about finding yourself. Life is about creating yourself.</strong><br/>
+					人生是一個很長的旅程，珍惜當下，享受現在，我正試著去創造屬於自己的故事。
+					</p>
+				</div>
+      		</div>
+      	</div>
+
+      	<!-- 求學 -->
+      	<div class="container mt-5">
+      		<div class="row border-bottom content-line">
+      			<i class="material-icons md-light md-26 fa">school</i>
+      			<h3 class="content-title">求學歷程</h3>
+      		</div>
+      		<div class="row no-gutters mt-3">
+      			<div class="col-12 col-md-11">      				
+      				<h5 class="text-primary align-text-bottom">國立臺北教育大學</h4>
+      				<h6 class="text-muted">數位科技設計學系</h5>
+      			</div>
+      			<div class="col-6 col-md-1 align-self-center">
+      				<h5><span class="badge badge-secondary custom-badge">2008 - 2013</span></h5>
+      			</div>
+      		</div>
+      		<div class="row">
+      			<div class="col-md-12 mt-1">
+      				<p>我們系當初的目標，志在培養能做程式、設計、專案規劃等數位產業相關之<strong>溝通人才</strong>。<br/>
+                     回想當年，程式、資料庫、網路管理、3D繪圖、專案管理、嵌入式系統等課程，所學可說是包羅萬象，但一概不通。<br/>
+                     認真想我還是對程式最有興趣吧 ？ 所以，我最後成了工程師。 
+					</p>
+      			</div>
+      		</div>
+
+      		<div class="row no-gutters mt-3">
+      			<div class="col-12 col-md-11">      				
+      				<h5 class="text-primary align-text-bottom">國立海洋大學</h4>
+      				<h6 class="text-muted">資訊工程學系在職碩班</h5>
+      			</div>
+      			<div class="col-6 col-md-1 align-self-center">
+      				<h5><span class="badge badge-secondary custom-badge">2017 - Now</span></h5>
+      			</div>
+      		</div>
+      		<div class="row">
+      			<div class="col-md-12 mt-1">
+      				<p>2017年初，因為工作上手，也多了不少閒暇時間，眼看自己所學所會，已漸漸跟不上趨勢，毅然決定返校進修。<br/>
+				   目前著手研究<strong>機器學系</strong>與<strong>語意辨識</strong>之領域，預計於2019年畢業，大概吧？
+					</p>
+      			</div>
+      		</div>
+      	</div>
+
+      	<!-- 工作 -->
+      	<div class="container mt-5">
+      		<div class="row border-bottom content-line">
+      			<i class="material-icons md-light md-26 fa">work</i>
+      			<h3 class="content-title">工作經歷</h3>
+      		</div>
+      		<div class="row no-gutters mt-3">
+      			<div class="col-12 col-md-11">      				
+      				<h5 class="text-primary align-text-bottom">網站工程師</h4>
+      				<h6 class="text-muted">良興股份有限公司</h5>
+      			</div>
+      			<div class="col-6 col-md-1 align-self-center">
+      				<h5><span class="badge badge-danger custom-badge">2014 - 2015</span></h5>
+      			</div>
+      		</div>
+      		<div class="row">
+      			<div class="col-md-12 mt-1">
+      				<p>購物網站 <strong>Eclife</strong> 之全端工程師，我第一份程式工作，很感謝當初教導我的前輩們，無奈因爲距離而分開。<br/>
+				   工作內容涵蓋購物網站之功能與活動頁面（ex.任挑任選2件399），及公司內部表單系統、商品上架系統。<br/>
+				   另外負責公司商品與對外大型購物商城之資料串接（ex.Yahoo,Pchome...)。<br/>
+					</p>
+      			</div>
+      		</div>
+
+      		<div class="row no-gutters mt-3">
+      			<div class="col-12 col-md-11">      				
+      				<h5 class="text-primary align-text-bottom">工程師</h4>
+      				<h6 class="text-muted">翔威國際有限公司</h5>
+      			</div>
+      			<div class="col-6 col-md-1 align-self-center">
+      				<h5><span class="badge badge-danger custom-badge">2015 - Now</span></h5>
+      			</div>
+      		</div>
+      		<div class="row">
+      			<div class="col-md-12 mt-1">
+      				<p>MES系統開發與導入工程師，主要負責開發管理工廠之<strong>作業執行系統。</strong><br/>
+				   	   已參與多家科技公司之工廠系統專案，也於2017年至大陸東莞，負責導入公司系統與教育訓練。
+					</p>
+      			</div>
+      		</div>
+
+      		<div class="row no-gutters mt-3">
+      			<div class="col-12 col-md-11">      				
+      				<h5 class="text-primary align-text-bottom">Being Awesome</h4>
+      				<h6 class="text-muted">人生</h5>
+      			</div>
+      			<div class="col-6 col-md-1 align-self-center">
+      				<h5><span class="badge badge-danger custom-badge">2015 - Till Death</span></h5>
+      			</div>
+      		</div>
+      		<div class="row">
+      			<div class="col-md-12 mt-1">
+      				<p>學習是一條永無止境的道路，在這科技不斷演進的時代，一直嘗試新技術是我的興趣。<br/>
+				   	   會不會擔心哪天技術跟不上而被淘汰？<br/>
+				   	   只要不間斷學習新的知識就沒什麼好焦慮的，畢竟新的東西只會越來越簡單，越來越好上手，不然幹嘛用？<br/>
+				   	   所以這沒什麼好擔憂的，勉勵自己，活到老學到老。
+					</p>
+      			</div>
+      		</div>
+      	</div>
+
+    	<!-- 技術 -->
+    	<div class="container mt-5">
+      		<div class="row border-bottom content-line">
+      			<i class="material-icons md-light md-26 fa">code</i>
+      			<h3 class="content-title">電腦技能</h3>
+      		</div>
+      		<div class="row mt-3">
+      			<div class="col-md-12">
+      				<h5><strong>程式語言</strong></h5>
+      			</div>
+      		</div>
+      		<div class="progress mt-1" style="height: 30px;">
+  				<div class="progress-bar bg-success progress-bar-font" role="progressbar" style="width: 95%;" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">C#</div>
+			</div>
+			<div class="progress mt-3" style="height: 30px;">
+  				<div class="progress-bar bg-warning progress-bar-font" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">VB</div>
+			</div>
+			<div class="progress mt-3" style="height: 30px;">
+  				<div class="progress-bar bg-warning progress-bar-font" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">Android / Java</div>
+			</div>
+			<div class="progress mt-3" style="height: 30px;">
+  				<div class="progress-bar bg-danger progress-bar-font" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Python</div>
+			</div>
+			<div class="row mt-5">
+      			<div class="col-md-12">
+      				<h5><strong>網頁相關</strong></h5>
+      			</div>
+      		</div>
+      		<div class="progress mt-1" style="height: 30px;">
+  				<div class="progress-bar bg-success progress-bar-font" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">Html / Css</div>
+			</div>
+			<div class="progress mt-3" style="height: 30px;">
+  				<div class="progress-bar bg-success progress-bar-font" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">Asp.Net / WebForm</div>
+			</div>
+			<div class="progress mt-3" style="height: 30px;">
+  				<div class="progress-bar bg-warning progress-bar-font" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">Javascript / jQuery</div>
+			</div>
+			<div class="progress mt-3" style="height: 30px;">
+  				<div class="progress-bar bg-success progress-bar-font" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">ajax / json / xml</div>
+			</div>
+			<div class="row mt-5">
+      			<div class="col-md-12">
+      				<h5><strong>資料庫相關</strong></h5>
+      			</div>
+      		</div>
+      		<div class="progress mt-1" style="height: 30px;">
+  				<div class="progress-bar bg-warning progress-bar-font" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">SQL Server</div>
+			</div>
+			<div class="progress mt-3" style="height: 30px;">
+  				<div class="progress-bar bg-success progress-bar-font" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">Oracle</div>
+			</div>
+      	</div>
+
+      	<!--作品展示-->
+      	<div class="container mt-5">
+      		<div class="row border-bottom content-line">
+      			<i class="material-icons md-light md-26 fa">search</i>
+      			<h3 class="content-title">我的這些年</h3>
+      		</div>
+
+      		<div class="row">
+      			<div class="col-md-4">
+            	  <div class="card mb-4 box-shadow">
+            	    <img class="card-img-top" alt="Android 旅行計算機" style="height: 225px; width: 100%; display: block; cursor:pointer;" 
+            	    	 src="img/android.png" data-holder-rendered="true" onclick="clickUrl('https://play.google.com/store/apps/details?id=tw.com.user31.travelcalculator1');">
+            	    <div class="card-body">
+            	      <h5 class="card-title text-primary">Android 旅行計算機</h5>
+            	      <p class="card-text">起因只是常出國，為了方便計算匯率而寫的 Android 小程式<br/><br/><br/></p>
+            	      	<div class="d-flex justify-content-between align-items-center">
+                    		<button type="button" class="btn btn-sm btn-outline-secondary" onclick="clickUrl('https://play.google.com/store/apps/details?id=tw.com.user31.travelcalculator1');">View</button>
+                    		<small class="text-muted">2016</small>
+                  	  	</div>
+            	    </div>
+            	  </div>
+            	</div>
+            	<div class="col-md-4">
+            	  <div class="card mb-4 box-shadow">
+            	    <img class="card-img-top" alt="工作紀錄系統" style="height: 225px; width: 100%; display: block; cursor:pointer;" 
+            	    	 src="img/jobweb.png" data-holder-rendered="true" onclick="clickUrl('#');">
+            	    <div class="card-body">
+            	      <h5 class="card-title text-primary">工作紀錄系統</h5>
+            	      <p class="card-text">公司開發之網站系統，用於紀錄員工之工作內容。<br/>網頁使用 Asp.net，資料庫使用 Oracle。</p>
+            	      	<div class="d-flex justify-content-between align-items-center">
+                    		<button type="button" class="btn btn-sm btn-outline-secondary" onclick="clickUrl('#');">View</button>
+                    		<small class="text-muted">2017</small>
+                  	  	</div>
+            	    </div>
+            	  </div>
+            	</div>
+            	<div class="col-md-4">
+            	  <div class="card mb-4 box-shadow">
+            	    <img class="card-img-top" alt="直銷記帳軟體" style="height: 225px; width: 100%; display: block;" src="img/pic.png" data-holder-rendered="true">
+            	    <div class="card-body">
+            	      <h5 class="card-title text-primary">直銷記帳軟體</h5>
+            	      <p class="card-text">C# WPF + Access 的本機記帳軟體<br/><br/><br/><br/></p>
+            	      	<div class="d-flex justify-content-between align-items-center">
+                    		<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    		<small class="text-muted">2017</small>
+                  	  	</div>
+            	    </div>
+            	  </div>
+            	</div>
+      		</div>
+
+      		<div class="row">
+      			<div class="col-md-4">
+            	  <div class="card mb-4 box-shadow">
+            	    <img class="card-img-top" alt="Blogger" style="height: 225px; width: 100%; display: block;cursor:pointer;" 
+            	    	 src="img/blogger.png" data-holder-rendered="true" onclick="clickUrl('https://user31-blog.blogspot.tw/');">
+            	    <div class="card-body">
+            	      <h5 class="card-title text-primary">Blogger</h5>
+            	      <p class="card-text">我的程式筆記與旅行的故事<br/><br/><br/><br/></p>
+            	      	<div class="d-flex justify-content-between align-items-center">
+                    		<button type="button" class="btn btn-sm btn-outline-secondary" onclick="clickUrl('https://user31-blog.blogspot.tw/');">View</button>
+                    		<small class="text-muted">2018</small>
+                  	  	</div>
+            	    </div>
+            	  </div>
+            	</div>
+            	<!--
+            	<div class="col-md-4">
+            	  <div class="card mb-4 box-shadow">
+            	    <img class="card-img-top" alt="工作紀錄系統" style="height: 225px; width: 100%; display: block;" src="img/pic.png" data-holder-rendered="true">
+            	    <div class="card-body">
+            	      <h5 class="card-title text-primary">工作紀錄系統</h5>
+            	      <p class="card-text">公司開發之網站系統，用於紀錄員工之工作內容。<br/>網頁使用 Asp.net，資料庫使用 Oracle。</p>
+            	      	<div class="d-flex justify-content-between align-items-center">
+                    		<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    		<small class="text-muted">2017</small>
+                  	  	</div>
+            	    </div>
+            	  </div>
+            	</div>
+            	<div class="col-md-4">
+            	  <div class="card mb-4 box-shadow">
+            	    <img class="card-img-top" alt="Blogger" style="height: 225px; width: 100%; display: block;" src="img/pic.png" data-holder-rendered="true">
+            	    <div class="card-body">
+            	      <h5 class="card-title text-primary">Blogger</h5>
+            	      <p class="card-text">我的程式筆記與旅行的故事<br/><br/><br/><br/></p>
+            	      	<div class="d-flex justify-content-between align-items-center">
+                    		<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    		<small class="text-muted">2018</small>
+                  	  	</div>
+            	    </div>
+            	  </div>
+            	</div>
+            	-->
+      		</div>
+      	</div>
+
+      	<!--聯絡我-->
+      	<div class="container mt-5">
+      		<div class="row border-bottom content-line">
+      			<i class="material-icons md-light md-26 fa">email</i>
+      			<h3 class="content-title">與我聯絡</h3>
+      		</div>
+      		<div class="form-group mt-3">
+    			<label for="inputAddress" class="text-dark"><strong>Name</strong></label>
+    			<input type="text" class="form-control" id="inputName" placeholder="Enter Name">
+  			</div>
+      		<div class="form-group">
+    			<label for="exampleInputEmail1" class="text-dark"><strong>Email</strong></label>
+    			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  			</div>
+  			<div class="form-group">
+    			<label for="exampleFormControlTextarea1" class="text-dark"><strong>Text</strong></label>
+    			<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  			</div>
+  			<div class="row">
+  				<div class="col-md-12">
+  					<button id="btnSend" type="button" class="btn btn-secondary btn-lg btn-block" onclick='sendEmail();' disabled>Send</button>
+  				</div>
+  			</div>
+      	</div>
+	</main>
+
+	<!--Footer-->
+	<footer class="footer mt-20">
+      <div class="container text-center">
+        <span class="text-muted">2018．user31 / template bootstrap 4</span>
+      </div>
+    </footer>
+
+</body>
+
+</html>
