@@ -149,12 +149,12 @@ function handleAuthResult(authResult) {
 }
 
  function loadGmailApi() {
-    gapi.client.load('gmail', 'v1',chage_Display)
+    gapi.client.load('gmail', 'v1',displayMail)
 }
 
-function change_Display(){
-	  document.getElementById("div_gmail").style.display = "";
-	  document.getElementById("div_email").style.display = "none";
+function displayMail(){
+	document.getElementById("div_gmail").style.display = "";
+	document.getElementById("div_email").style.display = "none";
 }
 
 function sendEmail(){  
