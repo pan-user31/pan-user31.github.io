@@ -121,6 +121,13 @@ function clickUrl(_url){
 	);
 }
 
+function clickUrl(_url,_targert){
+	window.open(
+  	_url,
+  	_targert 
+	);
+}
+
 var CLIENT_ID = '691492970641-les0sjd1q2tomra4afv1friqjk7l6esm.apps.googleusercontent.com';
 var apiKey = 'AIzaSyBkR7uFK0CWUQF99SFr2OCoemVyBrQwUns';
 var SCOPES = 'https://mail.google.com/'
@@ -428,7 +435,9 @@ function sendMessage(headers_obj, message, callback)
             	    <img class="card-img-top" alt="Android 旅行計算機" style="height: 225px; width: 100%; display: block; cursor:pointer;" 
             	    	 src="img/android.png" data-holder-rendered="true" onclick="clickUrl('https://play.google.com/store/apps/details?id=tw.com.user31.travelcalculator1');">
             	    <div class="card-body">
-            	      <h5 class="card-title text-primary">Android 旅行計算機</h5>
+            	      <a href="https://play.google.com/store/apps/details?id=tw.com.user31.travelcalculator1" target="_blank">
+            	      	<h5 class="card-title text-primary">Android 旅行計算機</h5>
+            	      </a>
             	      <p class="card-text">起因只是常出國，為了方便計算匯率而寫的 Android 小程式<br/><br/><br/></p>
             	      	<div class="d-flex justify-content-between align-items-center">
                     		<button type="button" class="btn btn-sm btn-outline-secondary" onclick="clickUrl('https://play.google.com/store/apps/details?id=tw.com.user31.travelcalculator1');">View</button>
@@ -453,12 +462,17 @@ function sendMessage(headers_obj, message, callback)
             	</div>
             	<div class="col-md-4">
             	  <div class="card mb-4 box-shadow">
-            	    <img class="card-img-top" alt="直銷記帳軟體" style="height: 225px; width: 100%; display: block;" src="img/pic.png" data-holder-rendered="true">
+            	    <img class="card-img-top" alt="直銷記帳軟體" 
+            	    	 style="height:225px;width: 100%;display:block;cursor:pointer;" 
+            	    	 src="img/pic.png" data-holder-rendered="true" 
+            	    	 onclick="clickUrl('https://www.dropbox.com/s/b3ocpmzh0i1ic9z/SaleManagement%28Access%29.rar?raw=1','_self');">
             	    <div class="card-body">
+            	    <a href="https://www.dropbox.com/s/b3ocpmzh0i1ic9z/SaleManagement%28Access%29.rar?raw=1" target="_self">
             	      <h5 class="card-title text-primary">直銷記帳軟體</h5>
+            	    </a>
             	      <p class="card-text">C# WPF + Access 的本機記帳軟體<br/><br/><br/><br/></p>
             	      	<div class="d-flex justify-content-between align-items-center">
-                    		<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    		<button type="button" class="btn btn-sm btn-outline-secondary" onclick="clickUrl('https://www.dropbox.com/s/b3ocpmzh0i1ic9z/SaleManagement%28Access%29.rar?raw=1','_self');">View</button>
                     		<small class="text-muted">2017</small>
                   	  	</div>
             	    </div>
